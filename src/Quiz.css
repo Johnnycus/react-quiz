@@ -2,6 +2,11 @@
   margin: 6px !important;
 }
 
+.Button span {
+  text-shadow: 0 0 0 #fff;
+  color: transparent !important;
+}
+
 /*.Container {
   display: flex;
 }

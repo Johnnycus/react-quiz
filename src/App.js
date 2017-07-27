@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { database } from './firebase';
-import Quiz from './Quiz';
+import QuizList from './QuizList';
 import Modal from './Modal';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
@@ -28,8 +28,8 @@ class App extends Component {
     this.setState({ open: !this.state.open });
   }
 
-  removeQuiz = (key) => {
-    this.database.child(key).remove();
+  removeQuiz = (quizID) => {
+    this.database.child(quizID).remove();
   }
 
   render() {
@@ -46,7 +46,7 @@ class App extends Component {
         />
         <div className="Topic">
           {this.state.quizes ? (
-            <Quiz
+            <QuizList
               quizes={this.state.quizes}
               removeQuiz={this.removeQuiz} />
           ) : (
