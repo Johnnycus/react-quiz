@@ -7,6 +7,10 @@
   color: transparent !important;
 }
 
+.Answer.hide {
+  display: none;
+}
+
 /*.Container {
   display: flex;
 }

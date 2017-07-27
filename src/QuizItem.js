@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardActions, CardHeader } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import map from 'lodash/map';
@@ -21,12 +22,14 @@ const QuizItem = ({ quiz, quizID, removeQuiz }) => {
         <CardActions className="CardActions">
           {
             map(quiz.questions, (question) => {
-              return <RaisedButton
-                className="Button"
-                label={`${question.name}${question.done ? ' ✔' : ''}`}
-                disabled={question.done && true}
-                secondary={true}
-                key={question.name} />
+              return <Link key={question.name} to={`${quiz.name.split(' ').join('-')}/${question.name}`}>
+                <RaisedButton
+                  className="Button"
+                  label={`${question.name}${question.done ? ' ✔' : ''}`}
+                  disabled={question.done && true}
+                  secondary={true}
+                  key={question.name} />
+              </Link>
             })
           }
           <RaisedButton
@@ -40,4 +43,4 @@ const QuizItem = ({ quiz, quizID, removeQuiz }) => {
   )
 }
 
-export default QuizItem
+export default QuizItem;

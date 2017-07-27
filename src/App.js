@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { database } from './firebase';
-import QuizList from './QuizList';
-import Modal from './Modal';
+import { isMounted } from './utils';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import QuizList from './QuizList';
+import Modal from './Modal';
 import './App.css';
 
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
   componentDidMount() {
     this.database
       .on('value', (snapshot) => {
-        this.setState({ quizes: snapshot.val() });
+        if (isMounted(this)) { this.setState({ quizes: snapshot.val() }); }
       })
   }
 
@@ -50,8 +51,8 @@ class App extends Component {
               quizes={this.state.quizes}
               removeQuiz={this.removeQuiz} />
           ) : (
-            <CircularProgress className="Loading" size={80} thickness={5} />
-          )}
+              <CircularProgress className="Loading" size={80} thickness={5} />
+            )}
         </div>
         <Modal
           open={this.state.open}
