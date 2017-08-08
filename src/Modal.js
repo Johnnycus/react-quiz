@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Dialog from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
 
 const initialState = {
   topic: '',
@@ -15,11 +15,11 @@ const initialState = {
   '200-answer': '',
   '300-answer': '',
   '400-answer': '',
-  '500-answer': '',
-};
+  '500-answer': ''
+}
 
 class Modal extends Component {
-  state = initialState;
+  state = initialState
 
   static propTypes = {
     open: PropTypes.bool.isRequired,
@@ -27,14 +27,14 @@ class Modal extends Component {
     handleModal: PropTypes.func.isRequired
   }
 
-  hanldeInputChange = (event) => {
-    const { name, value } = event.target;
+  hanldeInputChange = event => {
+    const { name, value } = event.target
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value })
   }
 
   clearModal = () => {
-    this.setState(initialState);
+    this.setState(initialState)
   }
 
   checkState = () => {
@@ -48,14 +48,25 @@ class Modal extends Component {
     //   if (value == '') { console.log('true')};
     // }
     // Object.keys(this.state).every(x => !this.state[x])
-    if (!this.state.topic || !this.state['100-answer'] || !this.state['200-answer'] || !this.state['300-answer'] || !this.state['400-answer'] || !this.state['500-answer'] || !this.state['100-question'] || !this.state['200-question'] || !this.state['300-question'] || !this.state['400-question'] || !this.state['500-question']) {
-      return true;
+    if (
+      !this.state.topic ||
+      !this.state['100-answer'] ||
+      !this.state['200-answer'] ||
+      !this.state['300-answer'] ||
+      !this.state['400-answer'] ||
+      !this.state['500-answer'] ||
+      !this.state['100-question'] ||
+      !this.state['200-question'] ||
+      !this.state['300-question'] ||
+      !this.state['400-question'] ||
+      !this.state['500-question']
+    ) {
+      return true
     }
-
   }
 
   createQuiz = () => {
-    if (this.checkState()) return false;
+    if (this.checkState()) return false
 
     this.props.database.push({
       name: this.state.topic,
@@ -92,15 +103,15 @@ class Modal extends Component {
           answer: this.state['500-answer'],
           done: false
         }
-      },
-    });
+      }
+    })
 
-    this.clearModal();
-    this.props.handleModal();
+    this.clearModal()
+    this.props.handleModal()
   }
 
   render() {
-    const { open, handleModal } = this.props;
+    const { open, handleModal } = this.props
 
     const style = {
       question: {
@@ -111,28 +122,16 @@ class Modal extends Component {
         marginLeft: '2%',
         width: '48%'
       }
-    };
+    }
 
     const actions = [
-      <FlatButton
-        label="Clear"
-        primary={true}
-        onTouchTap={this.clearModal}
-      />,
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={handleModal}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onTouchTap={this.createQuiz}
-        disabled={this.checkState()}
-      />
-    ];
+      <FlatButton label="Clear" primary={true} onTouchTap={this.clearModal} />,
+      <FlatButton label="Cancel" primary={true} onTouchTap={handleModal} />,
+      <FlatButton label="Submit" primary={true} onTouchTap={this.createQuiz} disabled={this.checkState()} />
+    ]
 
-    let i, inputs = [];
+    let i,
+      inputs = []
     for (i = 1; i < 6; i++) {
       inputs.push(
         <div key={i}>
@@ -153,7 +152,7 @@ class Modal extends Component {
             multiLine={true}
           />
         </div>
-      );
+      )
     }
 
     return (
@@ -162,7 +161,8 @@ class Modal extends Component {
         actions={actions}
         open={open}
         onRequestClose={handleModal}
-        autoScrollBodyContent={true}>
+        autoScrollBodyContent={true}
+      >
         <TextField
           name="topic"
           value={this.state.topic}
@@ -170,13 +170,14 @@ class Modal extends Component {
           onChange={this.hanldeInputChange}
           fullWidth={true}
           multiLine={true}
-        /><br />
+        />
+        <br />
         <br />
         Questions:
         {inputs}
       </Dialog>
-    );
+    )
   }
 }
 
-export default Modal;
+export default Modal

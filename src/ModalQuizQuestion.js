@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { isMounted } from './utils'
-import { Link } from 'react-router-dom'
 import { database } from './firebase'
-import { FourOhFour } from './ClientApp'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
-class QuizQuestion extends Component {
+class ModalQuizQuestion extends Component {
   state = {
     quizName: '',
     quiz: {},
@@ -34,36 +34,35 @@ class QuizQuestion extends Component {
 
   render() {
     const { name, done, question, answer } = this.state.question
-    if (done) {
-      return <FourOhFour />
+    const { history } = this.props
+    const back = e => {
+      history.goBack()
     }
+    const actions = [<FlatButton label="Close" primary={true} onTouchTap={back} />]
 
     return (
-      <div>
-        {done
-          ? FourOhFour
-          : name &&
-            <div>
-              <Link to="/">Go back</Link>
-              <h1>
-                {this.state.quiz.name}
-              </h1>
-              <h2>
-                {name} points
-              </h2>
-              <h3>
-                Question: {question}
-              </h3>
-              <p className={`Answer ${done ? '' : 'hide'}`}>
-                {answer}
-              </p>
-              <button className={`Answer ${done ? 'hide' : ''}`} onClick={this.checkAnswer}>
-                Check
-              </button>
-            </div>}
-      </div>
+      <Dialog
+        title={this.state.quiz.name}
+        actions={actions}
+        open={true}
+        onRequestClose={back}
+        autoScrollBodyContent={true}
+      >
+        <h2>
+          {name} points
+        </h2>
+        <h3>
+          Question: {question}
+        </h3>
+        <p className={`Answer ${done ? '' : 'hide'}`}>
+          {answer}
+        </p>
+        <button className={`Answer ${done ? 'hide' : ''}`} onClick={this.checkAnswer}>
+          Check
+        </button>
+      </Dialog>
     )
   }
 }
 
-export default QuizQuestion
+export default ModalQuizQuestion
