@@ -22,8 +22,13 @@ class QuizQuestion extends Component {
   }
 
   checkAnswer = () => {
-    database.ref(`/topics/${this.state.quizName}/questions/${this.props.match.params.question}`).update({
+    const { quizName, quiz } = this.state,
+      { question } = this.props.match.params
+    database.ref(`/topics/${quizName}/questions/${question}`).update({
       done: true
+    })
+    database.ref(`/topics/${quizName}`).update({
+      progress: quiz.progress + 1
     })
   }
 
