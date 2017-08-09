@@ -18,7 +18,7 @@ const initialState = {
   '500-answer': ''
 }
 
-class Modal extends Component {
+class ModalCreateQuiz extends Component {
   state = initialState
 
   static propTypes = {
@@ -70,6 +70,7 @@ class Modal extends Component {
 
     this.props.database.push({
       name: this.state.topic,
+      url: this.state.topic.replace(/[^a-zA-Z0-9\s]/g, '').replace(/^\s+|\s+$/g, '').replace(/\s+/g, '-'),
       progress: 0,
       timestamp: Date.now(),
       questions: {
@@ -180,4 +181,4 @@ class Modal extends Component {
   }
 }
 
-export default Modal
+export default ModalCreateQuiz

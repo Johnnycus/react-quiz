@@ -21,7 +21,7 @@ const QuizItem = ({ quiz, quizID, removeQuiz }) => {
               <Link
                 key={question.name}
                 to={{
-                  pathname: `${quiz.name.split(' ').join('-')}/${question.name}`,
+                  pathname: `${quiz.url}/${question.name}`,
                   state: { modal: true }
                 }}
               >

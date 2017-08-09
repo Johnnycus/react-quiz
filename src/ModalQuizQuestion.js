@@ -12,18 +12,14 @@ class ModalQuizQuestion extends Component {
   }
 
   componentDidMount() {
-    database
-      .ref('/topics')
-      .orderByChild('name')
-      .equalTo(this.props.match.params.quiz.split('-').join(' '))
-      .on('value', snapshot => {
-        const quizName = Object.keys(snapshot.val())[0]
-        const quiz = snapshot.val()[quizName]
-        const question = snapshot.val()[quizName].questions[this.props.match.params.question]
-        if (isMounted(this)) {
-          this.setState({ quizName, quiz, question })
-        }
-      })
+    database.ref('/topics').orderByChild('url').equalTo(this.props.match.params.quiz).on('value', snapshot => {
+      const quizName = Object.keys(snapshot.val())[0]
+      const quiz = snapshot.val()[quizName]
+      const question = snapshot.val()[quizName].questions[this.props.match.params.question]
+      if (isMounted(this)) {
+        this.setState({ quizName, quiz, question })
+      }
+    })
   }
 
   checkAnswer = () => {
@@ -55,7 +51,7 @@ class ModalQuizQuestion extends Component {
           Question: {question}
         </h3>
         <p className={`Answer ${done ? '' : 'hide'}`}>
-          {answer}
+          Answer: {answer}
         </p>
         <button className={`Answer ${done ? 'hide' : ''}`} onClick={this.checkAnswer}>
           Check

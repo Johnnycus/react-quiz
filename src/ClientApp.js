@@ -6,7 +6,7 @@ import QuizQuestion from './QuizQuestion'
 import ModalQuizQuestion from './ModalQuizQuestion'
 import './index.css'
 
-export const FourOhFour = () => <h1>404</h1>
+const FourOhFour = () => <h1>404</h1>
 
 class ModalSwitch extends Component {
   previousLocation = this.props.location
