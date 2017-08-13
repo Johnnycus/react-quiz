@@ -25,7 +25,6 @@ class ModalQuizQuestion extends Component {
   checkAnswer = () => {
     const { quizName, quiz } = this.state,
       { question } = this.props.match.params
-    console.log(quizName.progress)
     database.ref(`/topics/${quizName}/questions/${question}`).update({
       done: true
     })

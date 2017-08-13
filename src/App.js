@@ -14,14 +14,15 @@ class App extends Component {
     this.database = database.ref('/topics')
     this.state = {
       quizes: null,
-      open: false
+      open: false,
+      loading: true
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.database.on('value', snapshot => {
       if (isMounted(this)) {
-        this.setState({ quizes: snapshot.val() })
+        this.setState({ quizes: snapshot.val(), loading: false })
       }
     })
   }
@@ -35,6 +36,7 @@ class App extends Component {
   }
 
   render() {
+    const { quizes, open, loading } = this.state
     return (
       <div>
         <AppBar
@@ -43,11 +45,11 @@ class App extends Component {
           iconElementRight={<FlatButton label="Create Quiz" onClick={this.handleModal} />}
         />
         <div className="Topic">
-          {this.state.quizes
-            ? <QuizList quizes={this.state.quizes} removeQuiz={this.removeQuiz} />
-            : <CircularProgress className="Loading" size={80} thickness={5} />}
+          {quizes && <QuizList quizes={this.state.quizes} removeQuiz={this.removeQuiz} />}
+          {loading && <CircularProgress className="Loading" size={80} thickness={5} />}
+          {!quizes && !loading && <p>No quizes. Add one</p>}
         </div>
-        <ModalCreateQuiz open={this.state.open} handleModal={this.handleModal} database={this.database} />
+        <ModalCreateQuiz open={open} handleModal={this.handleModal} database={this.database} />
       </div>
     )
   }
